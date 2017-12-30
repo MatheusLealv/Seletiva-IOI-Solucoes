@@ -131,7 +131,7 @@ int choose_Supremo()
 	return (num*Pow(den, mod - 2))%mod;
 }
 
-int ANIDO_LINDO(int h, int q, int i, int id)
+int cnt_permutation(int h, int q, int i, int id)
 {
 	return ( (F(cont[v[i]][id], h - Alt[v[i]]) * choose (n - k - q, cont[v[i]][id]))%mod);
 }
@@ -144,11 +144,11 @@ int solve(int n, int k, int hi)
 
 	for(int i = 1; i <= k ;i++)
 	{
-		resp = (resp * ANIDO_LINDO(hi, q, i, 0))%mod;
+		resp = (resp * cnt_permutation(hi, q, i, 0))%mod;
 
 		q += cont[v[i]][0];
 
-		resp = (resp * ANIDO_LINDO(hi, q, i, 1))%mod;
+		resp = (resp * cnt_permutation(hi, q, i, 1))%mod;
 
 		q += cont[v[i]][1];
 	}
