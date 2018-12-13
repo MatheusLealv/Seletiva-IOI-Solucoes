@@ -1,3 +1,6 @@
+// Seletiva IOI 2019 - Dia 01 - Amigo Secreto
+// Matheus Leal V
+
 #include <bits/stdc++.h>
 #define N 100050
 #define f first
