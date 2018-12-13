@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#define N 1001
+#define N 3005
 #define inf 2000000000
 #define f first
 #define s second
