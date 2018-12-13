@@ -109,9 +109,7 @@ int main()
 
 	build(1, 1, n);
 
-	ll tt = Ans();
-
-	cout<<tt<<"\n";
+	cout<<Ans()<<"\n";
 
 	for(ll i = 1; i <= q; i++)
 	{
@@ -133,8 +131,6 @@ int main()
 			soma += v;
 		}
 
-		ll tt = Ans();
-
-		cout<<tt<<"\n";
+		cout<<Ans()<<"\n";
 	}
 }
