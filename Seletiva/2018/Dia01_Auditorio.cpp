@@ -1,3 +1,6 @@
+// Seletiva IOI 2019 - Dia 01 - Auditorio
+// Matheus Leal V
+
 #include <bits/stdc++.h>
 #define N 255
 #define M 62550
