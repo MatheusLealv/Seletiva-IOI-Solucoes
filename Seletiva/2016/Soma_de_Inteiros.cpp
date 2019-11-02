@@ -11,37 +11,13 @@ ll n, K, v[N], sum[N], pos = 0, qcnt;
 
 pii dp[N];
 
-void fastscan(ll &number)
-{
-    bool negative = false;
-    register ll c;
-
-    number = 0;
-
-    c = getchar();
-
-    if (c=='-')
-    {
-        negative = true;
-
-        c = getchar();
-    }
-
-    for (; (c>47 && c<58); c=getchar())
-        number = number *10 + c - 48;
-
-    if (negative)
-        number *= -1;
-}
-
-
 int main()
 {
 	ios::sync_with_stdio(false); cin.tie(0);
 
-	fastscan(n), fastscan(K);
+	cin>>n>>K;
 
-	for(int i = 1; i <= n; i++) fastscan(v[i]), sum[i] = sum[i - 1] + v[i];
+	for(int i = 1; i <= n; i++) cin>>v[i], sum[i] = sum[i - 1] + v[i];
 
 	ll ini = 0, fim = inf, mid;
 
