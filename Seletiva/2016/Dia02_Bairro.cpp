@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #define inf 2000000000
-#define N 200050
+#define N 400050
 #define f first
 #define s second
 using namespace std;
@@ -8,56 +8,88 @@ typedef pair<int, int> pii;
 
 pii best;
 
-int n, k, sz[N], block[N], tot, ans[N];
+int n, k, sz[N], block[N], tot, ans[N], vis[N];
+
+int pai[N], viss[N];
 
 vector<int> grafo[N], A, B;
 
-int tam(int x, int p)
+vector<int> lista;
+
+int deep[N], tempo;
+
+bool cmp(int a, int b)
 {
-	sz[x] = 1;
-
-	for(auto v: grafo[x])
-	{
-		if(block[v] || v == p) continue;
-	
-		sz[x] += tam(v, x);
-	}
-
-	return sz[x];
+	return deep[a] > deep[b];
 }
 
-void split(int x, int p)
+inline int find_centroid(int u)
 {
-	int maior = tot - sz[x];
+	lista.clear();
 
-	for(auto v: grafo[x])
+	++tempo;
+
+	queue<int> fila;
+
+	fila.push(u);
+
+	int qtd = 0;
+
+	deep[u] = 1;
+
+	while(!fila.empty())
 	{
-		if(block[v] || v == p) continue;
+		int x = fila.front();
 
-		split(v, x);
+		lista.push_back(x);
 
-		maior = max(maior, sz[v]);
+		//cout<<x<<" "<<deep[x]<<"\n";
+
+		qtd ++;
+
+		fila.pop();
+
+		viss[x] = tempo;
+
+		for(auto v: grafo[x])
+		{
+			if(viss[v] != tempo and !block[v])
+			{
+				viss[v] = tempo;
+
+				deep[v] = deep[x] + 1;
+
+				fila.push(v);
+			}
+		}
 	}
 
-	if(maior < best.s) best = pii(x, maior);
-}
+	sort(lista.begin(), lista.end(), cmp);
 
-int find_centroid(int x)
-{
-	best = pii(-1, inf);
+	for(auto x: lista)
+	{
+		sz[x] = 1;
 
-	tot = tam(x, x);
+		int maior = 0;
 
-	split(x, x);
+		for(auto v: grafo[x])
+			if(deep[v] > deep[x] and !block[v])
+			{
+				maior = max(maior, sz[v]);
+				sz[x] += sz[v];
+			}
 
-	return best.f;
+		maior = max(maior, qtd - sz[x]);
+
+		if(maior <= qtd/2) return x;
+	}
 }
 
 inline int bsearch(bool flag, int dist)
 {
 	if(!flag)
 	{
-		int ini = 0, fim = A.size() - 1, mid, best = -1;
+		int ini = 0, fim = (int)A.size() - 1, mid, best = -1;
 
 		while(fim >= ini)
 		{
@@ -78,7 +110,7 @@ inline int bsearch(bool flag, int dist)
 
 	else
 	{
-		int ini = 0, fim = B.size() - 1, mid, best = -1;
+		int ini = 0, fim = (int)B.size() - 1, mid, best = -1;
 
 		while(fim >= ini)
 		{
@@ -161,6 +193,18 @@ void solve(int x)
 	for(auto v : grafo[x]) if(!block[v]) solve(v);
 }
 
+void dfs(int x)
+{
+	cout<<"dfs "<<x<<"\n";
+	viss[x] = 1;
+
+	for(auto v: grafo[x])
+		if(!viss[v]) dfs(v);
+}
+
+queue<int> fila;
+
+
 int main()
 {
 	ios::sync_with_stdio(false); cin.tie(0);
@@ -179,7 +223,6 @@ int main()
 
 		grafo[b].push_back(n + i);
 	}
-
 	solve(1);
 
 	int best = 0;
